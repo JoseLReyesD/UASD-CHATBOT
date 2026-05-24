@@ -1,0 +1,12 @@
+.env*
+.flaskenv*
+.env.project
+.env.vault
+#Ocultar credenciales de desarrollo
+.env
+.env.local
+.env.preview
+.env.me
+!.env.example
+.vs/
+

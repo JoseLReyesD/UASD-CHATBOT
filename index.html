@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat UASD</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/png" href="uasd.png">
+    <style>
+        /* Animación personalizada para los puntos de "escribiendo..." */
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-4px); }
+        }
+        .dot { animation: bounce 1s infinite ease-in-out; }
+        .dot:nth-child(2) { animation-delay: 0.2s; }
+        .dot:nth-child(3) { animation-delay: 0.4s; }
+        /* Estilizar el contenedor con scroll interno */
+        .custom-scrollbar::-webkit-scrollbar {
+         width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #111827; /* bg-gray-900 */
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #374151; /* bg-gray-700 */
+            border-radius: 10px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #4f46e5; /* bg-indigo-600 */
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-gray-100 font-sans h-screen flex flex-col justify-between">
+
+    <header class="w-full py-4 px-6 bg-gray-800 border-b border-gray-700 flex items-center justify-between shadow-md z-10">
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 bg-indigo-600 rounded-full flex items-center justify-center font-bold text-white shadow overflow-hidden">
+                <img src="uasdlogo.png" alt="Perfil" class="w-full h-full object-cover rounded-full" />
+            </div>
+            <div>
+                <h1 class="text-md font-semibold tracking-wide">Asistente Virtual UASD</h1>
+                <span class="text-xs text-green-400 flex items-center gap-1">
+                    <span class="w-2 h-2 bg-green-400 rounded-full inline-block animate-pulse"></span> En línea (Estatuto Orgánico)
+                </span>
+            </div>
+        </div>
+    </header>
+
+    <main id="chat-container" class="flex-1 overflow-y-auto p-4 md:p-8 max-w-4xl w-full mx-auto flex flex-col">
+        
+        <div id="welcome-screen" class="flex-1 flex flex-col justify-center items-center text-center my-auto px-4 py-6 w-full">
+    <div class="mb-4 p-4 bg-indigo-600/10 rounded-2xl text-indigo-400 text-3xl shadow-inner inline-block">
+        <i class="fa-solid fa-graduation-cap"></i>
+    </div>
+    <h2 class="text-2xl md:text-3xl font-bold mb-1">Asistente del Estatuto Orgánico</h2>
+    <p class="text-gray-400 max-w-md text-xs md:text-sm mb-6">Selecciona una pregunta sugerida para conocer tus derechos, deberes y la estructura de la UASD.</p>
+
+    <div class="w-full max-w-4xl space-y-6 text-left overflow-y-auto max-h-[50vh] pr-2 custom-scrollbar">
+        
+        <div>
+            <h4 class="text-xs font-bold text-indigo-400 uppercase tracking-wider mb-2 flex items-center gap-2">
+                <i class="fa-solid fa-landmark text-xs"></i> Naturaleza, Misión y Fines
+            </h4>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <button data-prompt="¿Qué es la Universidad Autónoma de Santo Domingo?" class="suggestion-btn p-3 bg-gray-800 border border-gray-700 rounded-xl hover:border-indigo-500 hover:bg-gray-750 transition text-left text-xs font-medium text-gray-300 hover:text-white flex items-center justify-between group">
+                    <span>¿Qué es la UASD?</span>
+                    <i class="fa-solid fa-chevron-right text-[10px] text-gray-500 group-hover:text-indigo-400 transition"></i>
+                </button>
+                <button data-prompt="¿Cuál es la misión de la UASD?" class="suggestion-btn p-3 bg-gray-800 border border-gray-700 rounded-xl hover:border-indigo-500 hover:bg-gray-750 transition text-left text-xs font-medium text-gray-300 hover:text-white flex items-center justify-between group">
+                    <span>¿Cuál es la misión de la UASD?</span>
+                    <i class="fa-solid fa-chevron-right text-[10px] text-gray-500 group-hover:text-indigo-400 transition"></i>
+                </button>
+                <button data-prompt="¿Cuáles son los fines de la Universidad?" class="suggestion-btn p-3 bg-gray-800 border border-gray-700 rounded-xl hover:border-indigo-500 hover:bg-gray-750 transition text-left text-xs font-medium text-gray-300 hover:text-white flex items-center justify-between group">
+                    <span>¿Cuáles son los fines de la Universidad?</span>
+                    <i class="fa-solid fa-chevron-right text-[10px] text-gray-500 group-hover:text-indigo-400 transition"></i>
+                </button>
+                <button data-prompt="¿Cuáles son las funciones fundamentales de la UASD?" class="suggestion-btn p-3 bg-gray-800 border border-gray-700 rounded-xl hover:border-indigo-500 hover:bg-gray-750 transition text-left text-xs font-medium text-gray-300 hover:text-white flex items-center justify-between group">
+                    <span>¿Cuáles son las funciones fundamentales?</span>
+                    <i class="fa-solid fa-chevron-right text-[10px] text-gray-500 group-hover:text-indigo-400 transition"></i>
+                </button>
+                <button data-prompt="¿Qué establece el Estatuto sobre la autonomía universitaria?" class="suggestion-btn p-3 bg-gray-800 border border-gray-700 rounded-xl hover:border-indigo-500 hover:bg-gray-750 transition text-left text-xs font-medium text-gray-300 hover:text-white flex items-center justify-between group">
+                    <span>Sobre la autonomía universitaria</span>
+                    <i class="fa-solid fa-chevron-right text-[10px] text-gray-500 group-hover:text-indigo-400 transition"></i>
+                </button>
+                <button data-prompt="¿Cuáles son los principios que orientan a la Universidad?" class="suggestion-btn p-3 bg-gray-800 border border-gray-700 rounded-xl hover:border-indigo-500 hover:bg-gray-750 transition text-left text-xs font-medium text-gray-300 hover:text-white flex items-center justify-between group">
+                    <span>¿Cuáles son los principios que la orientan?</span>
+                    <i class="fa-solid fa-chevron-right text-[10px] text-gray-500 group-hover:text-indigo-400 transition"></i>
+                </button>
+            </div>
+        </div>
+
+        <div>
+            <h4 class="text-xs font-bold text-emerald-400 uppercase tracking-wider mb-2 flex items-center gap-2 mt-2">
+                <i class="fa-solid fa-sitemap text-xs"></i> Gobierno y Estructura Universitaria
+            </h4>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <button data-prompt="¿Cómo está organizada la Universidad?" class="suggestion-btn p-3 bg-gray-800 border border-gray-700 rounded-xl hover:border-indigo-500 hover:bg-gray-750 transition text-left text-xs font-medium text-gray-300 hover:text-white flex items-center justify-between group">
+                    <span>¿Cómo está organizada la Universidad?</span>
+                    <i class="fa-solid fa-chevron-right text-[10px] text-gray-500 group-hover:text-emerald-400 transition"></i>
+                </button>
+                <button data-prompt="¿Cuáles son los organismos de gobierno de la UASD?" class="suggestion-btn p-3 bg-gray-800 border border-gray-700 rounded-xl hover:border-indigo-500 hover:bg-gray-750 transition text-left text-xs font-medium text-gray-300 hover:text-white flex items-center justify-between group">
+                    <span>¿Cuáles son los organismos de gobierno?</span>
+                    <i class="fa-solid fa-chevron-right text-[10px] text-gray-500 group-hover:text-emerald-400 transition"></i>
+                </button>
+                <button data-prompt="¿Qué es el Claustro Mayor?" class="suggestion-btn p-3 bg-gray-800 border border-gray-700 rounded-xl hover:border-indigo-500 hover:bg-gray-750 transition text-left text-xs font-medium text-gray-300 hover:text-white flex items-center justify-between group">
+                    <span>¿Qué es el Claustro Mayor?</span>
+                    <i class="fa-solid fa-chevron-right text-[10px] text-gray-500 group-hover:text-emerald-400 transition"></i>
+                </button>
+                <button data-prompt="¿Qué es el Claustro Menor?" class="suggestion-btn p-3 bg-gray-800 border border-gray-700 rounded-xl hover:border-indigo-500 hover:bg-gray-750 transition text-left text-xs font-medium text-gray-300 hover:text-white flex items-center justify-between group">
+                    <span>¿Qué es el Claustro Menor?</span>
+                    <i class="fa-solid fa-chevron-right text-[10px] text-gray-500 group-hover:text-emerald-400 transition"></i>
+                </button>
+                <button data-prompt="¿Qué es el Consejo Universitario?" class="suggestion-btn p-3 bg-gray-800 border border-gray-700 rounded-xl hover:border-indigo-500 hover:bg-gray-750 transition text-left text-xs font-medium text-gray-300 hover:text-white flex items-center justify-between group">
+                    <span>¿Qué es el Consejo Universitario?</span>
+                    <i class="fa-solid fa-chevron-right text-[10px] text-gray-500 group-hover:text-emerald-400 transition"></i>
+                </button>
+                <button data-prompt="¿Quiénes integran el Consejo Universitario?" class="suggestion-btn p-3 bg-gray-800 border border-gray-700 rounded-xl hover:border-indigo-500 hover:bg-gray-750 transition text-left text-xs font-medium text-gray-300 hover:text-white flex items-center justify-between group">
+                    <span>¿Quiénes integran el Consejo Universitario?</span>
+                    <i class="fa-solid fa-chevron-right text-[10px] text-gray-500 group-hover:text-emerald-400 transition"></i>
+                </button>
+                <button data-prompt="¿Cuáles son las atribuciones del Consejo Universitario?" class="suggestion-btn p-3 bg-gray-800 border border-gray-700 rounded-xl hover:border-indigo-500 hover:bg-gray-750 transition text-left text-xs font-medium text-gray-300 hover:text-white flex items-center justify-between group">
+                    <span>Atribuciones del Consejo Universitario</span>
+                    <i class="fa-solid fa-chevron-right text-[10px] text-gray-500 group-hover:text-emerald-400 transition"></i>
+                </button>
+                <button data-prompt="¿Cuáles son las funciones del Rector?" class="suggestion-btn p-3 bg-gray-800 border border-gray-700 rounded-xl hover:border-indigo-500 hover:bg-gray-750 transition text-left text-xs font-medium text-gray-300 hover:text-white flex items-center justify-between group">
+                    <span>¿Cuáles son las funciones del Rector?</span>
+                    <i class="fa-solid fa-chevron-right text-[10px] text-gray-500 group-hover:text-emerald-400 transition"></i>
+                </button>
+                <button data-prompt="¿Cuáles son las funciones de los Vicerrectores?" class="suggestion-btn p-3 bg-gray-800 border border-gray-700 rounded-xl hover:border-indigo-500 hover:bg-gray-750 transition text-left text-xs font-medium text-gray-300 hover:text-white flex items-center justify-between group">
+                    <span>Funciones de los Vicerrectores</span>
+                    <i class="fa-solid fa-chevron-right text-[10px] text-gray-500 group-hover:text-emerald-400 transition"></i>
+                </button>
+            </div>
+        </div>
+
+        <div>
+            <h4 class="text-xs font-bold text-amber-400 uppercase tracking-wider mb-2 flex items-center gap-2 mt-2">
+                <i class="fa-solid fa-users-gear text-xs"></i> Facultades, Escuelas y Autoridades
+            </h4>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <button data-prompt="¿Qué son las Facultades?" class="suggestion-btn p-3 bg-gray-800 border border-gray-700 rounded-xl hover:border-indigo-500 hover:bg-gray-750 transition text-left text-xs font-medium text-gray-300 hover:text-white flex items-center justify-between group">
+                    <span>¿Qué son las Facultades?</span>
+                    <i class="fa-solid fa-chevron-right text-[10px] text-gray-500 group-hover:text-amber-400 transition"></i>
+                </button>
+                <button data-prompt="¿Cómo se organizan las Facultades?" class="suggestion-btn p-3 bg-gray-800 border border-gray-700 rounded-xl hover:border-indigo-500 hover:bg-gray-750 transition text-left text-xs font-medium text-gray-300 hover:text-white flex items-center justify-between group">
+                    <span>¿Cómo se organizan las Facultades?</span>
+                    <i class="fa-solid fa-chevron-right text-[10px] text-gray-500 group-hover:text-amber-400 transition"></i>
+                </button>
+                <button data-prompt="¿Qué son los Consejos Directivos de Facultad?" class="suggestion-btn p-3 bg-gray-800 border border-gray-700 rounded-xl hover:border-indigo-500 hover:bg-gray-750 transition text-left text-xs font-medium text-gray-300 hover:text-white flex items-center justify-between group">
+                    <span>Consejos Directivos de Facultad</span>
+                    <i class="fa-solid fa-chevron-right text-[10px] text-gray-500 group-hover:text-amber-400 transition"></i>
+                </button>
+                <button data-prompt="¿Cuáles son las funciones de los Decanos?" class="suggestion-btn p-3 bg-gray-800 border border-gray-700 rounded-xl hover:border-indigo-500 hover:bg-gray-750 transition text-left text-xs font-medium text-gray-300 hover:text-white flex items-center justify-between group">
+                    <span>¿Cuáles son las funciones de los Decanos?</span>
+                    <i class="fa-solid fa-chevron-right text-[10px] text-gray-500 group-hover:text-amber-400 transition"></i>
+                </button>
+                <button data-prompt="¿Qué son las Escuelas?" class="suggestion-btn p-3 bg-gray-800 border border-gray-700 rounded-xl hover:border-indigo-500 hover:bg-gray-750 transition text-left text-xs font-medium text-gray-300 hover:text-white flex items-center justify-between group">
+                    <span>¿Qué son las Escuelas?</span>
+                    <i class="fa-solid fa-chevron-right text-[10px] text-gray-500 group-hover:text-amber-400 transition"></i>
+                </button>
+                <button data-prompt="¿Cuáles son las funciones de los Directores de Escuela?" class="suggestion-btn p-3 bg-gray-800 border border-gray-700 rounded-xl hover:border-indigo-500 hover:bg-gray-750 transition text-left text-xs font-medium text-gray-300 hover:text-white flex items-center justify-between group">
+                    <span>Funciones de Directores de Escuela</span>
+                    <i class="fa-solid fa-chevron-right text-[10px] text-gray-500 group-hover:text-amber-400 transition"></i>
+                </button>
+                <button data-prompt="¿Qué establece el Estatuto sobre los Recintos, Centros y Subcentros Universitarios?" class="suggestion-btn p-3 bg-gray-800 border border-gray-700 rounded-xl hover:border-indigo-500 hover:bg-gray-750 transition text-left text-xs font-medium text-gray-300 hover:text-white flex items-center justify-between group">
+                    <span>Recintos, Centros y Subcentros</span>
+                    <i class="fa-solid fa-chevron-right text-[10px] text-gray-500 group-hover:text-amber-400 transition"></i>
+                </button>
+            </div>
+        </div>
+
+        <div>
+            <h4 class="text-xs font-bold text-rose-400 uppercase tracking-wider mb-2 flex items-center gap-2 mt-2">
+                <i class="fa-solid fa-user-graduate text-xs"></i> Estudiantes, Docentes y Derechos
+            </h4>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <button data-prompt="¿Qué establece el Estatuto sobre los estudiantes?" class="suggestion-btn p-3 bg-gray-800 border border-gray-700 rounded-xl hover:border-indigo-500 hover:bg-gray-750 transition text-left text-xs font-medium text-gray-300 hover:text-white flex items-center justify-between group">
+                    <span>Estatuto sobre los estudiantes</span>
+                    <i class="fa-solid fa-chevron-right text-[10px] text-gray-500 group-hover:text-rose-400 transition"></i>
+                </button>
+                <button data-prompt="¿Cuáles son los derechos de los estudiantes?" class="suggestion-btn p-3 bg-gray-800 border border-gray-700 rounded-xl hover:border-indigo-500 hover:bg-gray-750 transition text-left text-xs font-medium text-gray-300 hover:text-white flex items-center justify-between group">
+                    <span>Derechos de los estudiantes</span>
+                    <i class="fa-solid fa-chevron-right text-[10px] text-gray-500 group-hover:text-rose-400 transition"></i>
+                </button>
+                <button data-prompt="¿Cuáles son los deberes de los estudiantes?" class="suggestion-btn p-3 bg-gray-800 border border-gray-700 rounded-xl hover:border-indigo-500 hover:bg-gray-750 transition text-left text-xs font-medium text-gray-300 hover:text-white flex items-center justify-between group">
+                    <span>Deberes de los estudiantes</span>
+                    <i class="fa-solid fa-chevron-right text-[10px] text-gray-500 group-hover:text-rose-400 transition"></i>
+                </button>
+                <button data-prompt="¿Qué establece el Estatuto sobre la representación estudiantil?" class="suggestion-btn p-3 bg-gray-800 border border-gray-700 rounded-xl hover:border-indigo-500 hover:bg-gray-750 transition text-left text-xs font-medium text-gray-300 hover:text-white flex items-center justify-between group">
+                    <span>Representación estudiantil</span>
+                    <i class="fa-solid fa-chevron-right text-[10px] text-gray-500 group-hover:text-rose-400 transition"></i>
+                </button>
+                <button data-prompt="¿Qué establece el Estatuto sobre el personal docente?" class="suggestion-btn p-3 bg-gray-800 border border-gray-700 rounded-xl hover:border-indigo-500 hover:bg-gray-750 transition text-left text-xs font-medium text-gray-300 hover:text-white flex items-center justify-between group">
+                    <span>Estatuto sobre personal docente</span>
+                    <i class="fa-solid fa-chevron-right text-[10px] text-gray-500 group-hover:text-rose-400 transition"></i>
+                </button>
+                <button data-prompt="¿Cuáles son los derechos del personal docente?" class="suggestion-btn p-3 bg-gray-800 border border-gray-700 rounded-xl hover:border-indigo-500 hover:bg-gray-750 transition text-left text-xs font-medium text-gray-300 hover:text-white flex items-center justify-between group">
+                    <span>Derechos del personal docente</span>
+                    <i class="fa-solid fa-chevron-right text-[10px] text-gray-500 group-hover:text-rose-400 transition"></i>
+                </button>
+                <button data-prompt="¿Cuáles son los deberes del personal docente?" class="suggestion-btn p-3 bg-gray-800 border border-gray-700 rounded-xl hover:border-indigo-500 hover:bg-gray-750 transition text-left text-xs font-medium text-gray-300 hover:text-white flex items-center justify-between group">
+                    <span>Deberes del personal docente</span>
+                    <i class="fa-solid fa-chevron-right text-[10px] text-gray-500 group-hover:text-rose-400 transition"></i>
+                </button>
+                <button data-prompt="¿Qué establece el Estatuto sobre el régimen disciplinario?" class="suggestion-btn p-3 bg-gray-800 border border-gray-700 rounded-xl hover:border-indigo-500 hover:bg-gray-750 transition text-left text-xs font-medium text-gray-300 hover:text-white flex items-center justify-between group">
+                    <span>Régimen disciplinario</span>
+                    <i class="fa-solid fa-chevron-right text-[10px] text-gray-500 group-hover:text-rose-400 transition"></i>
+                </button>
+            </div>
+        </div>
+
+        <div>
+            <h4 class="text-xs font-bold text-sky-400 uppercase tracking-wider mb-2 flex items-center gap-2 mt-2">
+                <i class="fa-solid fa-cubes text-xs"></i> Investigación, Postgrado y Patrimonio
+            </h4>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <button data-prompt="¿Qué establece el Estatuto sobre la investigación?" class="suggestion-btn p-3 bg-gray-800 border border-gray-700 rounded-xl hover:border-indigo-500 hover:bg-gray-750 transition text-left text-xs font-medium text-gray-300 hover:text-white flex items-center justify-between group">
+                    <span>Investigación científica</span>
+                    <i class="fa-solid fa-chevron-right text-[10px] text-gray-500 group-hover:text-sky-400 transition"></i>
+                </button>
+                <button data-prompt="¿Qué establece el Estatuto sobre el postgrado?" class="suggestion-btn p-3 bg-gray-800 border border-gray-700 rounded-xl hover:border-indigo-500 hover:bg-gray-750 transition text-left text-xs font-medium text-gray-300 hover:text-white flex items-center justify-between group">
+                    <span>Estudios de Postgrado</span>
+                    <i class="fa-solid fa-chevron-right text-[10px] text-gray-500 group-hover:text-sky-400 transition"></i>
+                </button>
+                <button data-prompt="¿Qué establece el Estatuto sobre la extensión universitaria?" class="suggestion-btn p-3 bg-gray-800 border border-gray-700 rounded-xl hover:border-indigo-500 hover:bg-gray-750 transition text-left text-xs font-medium text-gray-300 hover:text-white flex items-center justify-between group">
+                    <span>Extensión universitaria</span>
+                    <i class="fa-solid fa-chevron-right text-[10px] text-gray-500 group-hover:text-sky-400 transition"></i>
+                </button>
+                <button data-prompt="¿Qué establece el Estatuto sobre el bienestar universitario?" class="suggestion-btn p-3 bg-gray-800 border border-gray-700 rounded-xl hover:border-indigo-500 hover:bg-gray-750 transition text-left text-xs font-medium text-gray-300 hover:text-white flex items-center justify-between group">
+                    <span>Bienestar universitario</span>
+                    <i class="fa-solid fa-chevron-right text-[10px] text-gray-500 group-hover:text-sky-400 transition"></i>
+                </button>
+                <button data-prompt="¿Qué establece el Estatuto sobre el patrimonio universitario?" class="suggestion-btn p-3 bg-gray-800 border border-gray-700 rounded-xl hover:border-indigo-500 hover:bg-gray-750 transition text-left text-xs font-medium text-gray-300 hover:text-white flex items-center justify-between group">
+                    <span>Patrimonio de la Universidad</span>
+                    <i class="fa-solid fa-chevron-right text-[10px] text-gray-500 group-hover:text-sky-400 transition"></i>
+                </button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+        <div id="messages-wrapper" class="hidden flex-col mt-auto">
+            <!-- Aquí se agregarán los mensajes del chat -->
+        </div>
+
+    </main>
+
+    <footer class="p-4 bg-gray-900 border-t border-gray-800 sticky bottom-0">
+        <div class="max-w-4xl w-full mx-auto relative flex items-center">
+            <input 
+                id="chat-input"
+                type="text" 
+                placeholder="Pregunta algo sobre el Estatuto Orgánico..." 
+                class="w-full bg-gray-800 border border-gray-700 rounded-xl py-3.5 pl-4 pr-16 text-sm text-gray-100 placeholder-gray-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition shadow-inner"
+            />
+            <div class="absolute right-2 flex items-center">
+                <button id="send-btn" class="bg-indigo-600 hover:bg-indigo-500 text-white p-2.5 rounded-lg transition shadow-md flex items-center justify-center">
+                    <i class="fa-solid fa-paper-plane text-xs"></i>
+                </button>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const welcomeScreen = document.getElementById('welcome-screen');
+        const messagesOriginalWrapper = document.getElementById('messages-wrapper');
+        const chatContainer = document.getElementById('chat-container');
+        const chatInput = document.getElementById('chat-input');
+        const sendBtn = document.getElementById('send-btn');
+        const suggestionBtns = document.querySelectorAll('.suggestion-btn');
+
+        let isChatActive = false;
+
+        function initListeners() {
+            sendBtn.addEventListener('click', handleSendInput);
+
+            chatInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') handleSendInput();
+            });
+
+            suggestionBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const promptText = btn.getAttribute('data-prompt');
+                    if (promptText) processUserMessage(promptText);
+                });
+            });
+        }
+
+        function handleSendInput() {
+            const text = chatInput.value.trim();
+            if (!text) return; 
+            
+            chatInput.value = ''; 
+            processUserMessage(text);
+        }
+
+        async function processUserMessage(messageText) {
+            if (!isChatActive) {
+                welcomeScreen.classList.add('hidden');
+                welcomeScreen.classList.remove('flex');
+                messagesOriginalWrapper.classList.remove('hidden');
+                messagesOriginalWrapper.classList.add('flex');
+                isChatActive = true;
+            }
+
+            appendUserMessage(messageText);
+            showTypingIndicator();
+
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 15000); 
+
+            try {
+                const response = await fetch('http://localhost:3000/api/chat', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ message: messageText }),
+                    signal: controller.signal 
+                });
+
+                clearTimeout(timeoutId); 
+                removeTypingIndicator();
+
+                if (!response.ok) {
+                    throw new Error('Respuesta de servidor inválida');
+                }
+
+                const data = await response.json();
+                appendAssistantMessage(data.reply);
+
+            } catch (error) {
+                removeTypingIndicator();
+                
+                if (error.name === 'AbortError') {
+                    appendAssistantMessage("El asistente está tardando demasiado en responder. Por favor, verifica tu conexión o vuelve a intentarlo.");
+                } else {
+                    appendAssistantMessage("Error de conexión: No se pudo contactar con el servicio de IA. Asegúrate de que el servidor esté encendido.");
+                }
+                console.error("Detalles del error:", error);
+            }
+        }
+
+        function getCurrentTime() {
+            const now = new Date();
+            return now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false });
+        }
+
+        function scrollToBottom() {
+            chatContainer.scrollTo({
+                top: chatContainer.scrollHeight,
+                behavior: 'smooth'
+            });
+        }
+
+        function appendUserMessage(text) {
+            const msgHtml = `
+                <div class="flex items-end justify-end gap-3 max-w-[85%] ml-auto animate-fade-in mb-2">
+                    <div class="flex flex-col items-end">
+                        <div class="bg-indigo-600 text-white px-4 py-2.5 rounded-2xl rounded-br-none text-sm shadow-md break-words">
+                            <p>${escapeHTML(text)}</p>
+                        </div>
+                        <span class="text-[10px] text-gray-500 mt-1 mr-1">${getCurrentTime()}</span>
+                    </div>
+                    <div class="w-8 h-8 bg-gray-700 rounded-full flex items-center justify-center font-bold text-xs text-indigo-300 border border-indigo-500/30 flex-shrink-0">
+                        U
+                    </div>
+                </div>
+            `;
+            messagesOriginalWrapper.insertAdjacentHTML('beforeend', msgHtml);
+            scrollToBottom();
+        }
+
+        function appendAssistantMessage(text) {
+            const msgHtml = `
+                <div class="flex items-end gap-3 max-w-[85%] mb-2">
+                    <div class="w-8 h-8 bg-indigo-600 rounded-full flex items-center justify-center font-bold text-xs text-white flex-shrink-0 shadow overflow-hidden">
+                        <img src="uasdlogo.png" alt="Perfil" class="w-full h-full object-cover rounded-full" />
+                    </div>
+                    <div class="flex flex-col items-start">
+                        <div class="bg-gray-800 border border-gray-700 text-gray-100 px-4 py-2.5 rounded-2xl rounded-bl-none text-sm shadow-md break-words">
+                            <p>${escapeHTML(text)}</p>
+                        </div>
+                        <span class="text-[10px] text-gray-500 mt-1 ml-1">${getCurrentTime()}</span>
+                    </div>
+                </div>
+            `;
+            messagesOriginalWrapper.insertAdjacentHTML('beforeend', msgHtml);
+            scrollToBottom();
+        }
+
+        function showTypingIndicator() {
+            if (document.getElementById('typing-indicator')) return;
+
+            const indicatorHtml = `
+                <div id="typing-indicator" class="flex items-end gap-3 max-w-[85%] mb-2">
+                    <div class="w-8 h-8 bg-indigo-600 rounded-full flex items-center justify-center font-bold text-xs text-white flex-shrink-0 shadow overflow-hidden">
+                        <img src="uasdlogo.png" alt="Perfil" class="w-full h-full object-cover rounded-full" />
+                    </div>
+                    <div class="flex flex-col items-start">
+                        <div class="bg-gray-800 border border-gray-700 px-4 py-3.5 rounded-2xl rounded-bl-none shadow-md flex items-center gap-1">
+                            <span class="dot w-2 h-2 bg-indigo-400 rounded-full"></span>
+                            <span class="dot w-2 h-2 bg-indigo-400 rounded-full"></span>
+                            <span class="dot w-2 h-2 bg-indigo-400 rounded-full"></span>
+                        </div>
+                    </div>
+                </div>
+            `;
+            messagesOriginalWrapper.insertAdjacentHTML('beforeend', indicatorHtml);
+            scrollToBottom();
+        }
+
+        function removeTypingIndicator() {
+            const indicator = document.getElementById('typing-indicator');
+            if (indicator) indicator.remove();
+        }
+
+        function escapeHTML(str) {
+            return str.replace(/[&<>'"]/g, 
+                tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)
+            );
+        }
+
+        document.addEventListener('DOMContentLoaded', initListeners);
+    </script>
+</body>
+</html>
