@@ -1,15 +1,22 @@
 import express from 'express';
+import path from 'path';
 import cors from 'cors';
 import { GoogleGenAI } from '@google/genai';
 import 'dotenv/config';
 import fs from 'fs'; // Librería nativa de Node.js para leer archivos
+import { fileURLToPath } from 'url';
 
-const express = require('express');
-const path = require('path');
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 const app = express();
+
+
 app.use(express.static(__dirname));
-app.use(cors());
 app.use(express.json());
+app.use(cors());
+
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'index.html'));
 });
