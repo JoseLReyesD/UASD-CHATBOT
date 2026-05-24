@@ -8,14 +8,11 @@ const express = require('express');
 const path = require('path');
 const app = express();
 app.use(express.static(__dirname));
-
+app.use(cors());
+app.use(express.json());
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'index.html'));
 });
-
-app.use(express.static(__dirname)); // Servir archivos estáticos desde la carpeta 'public'
-app.use(cors());
-app.use(express.json());
 
 const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 
