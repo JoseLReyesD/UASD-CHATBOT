@@ -4,7 +4,15 @@ import { GoogleGenAI } from '@google/genai';
 import 'dotenv/config';
 import fs from 'fs'; // Librería nativa de Node.js para leer archivos
 
+const express = require('express');
+const path = require('path');
 const app = express();
+app.use(express.static(__dirname));
+
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'index.html'));
+});
+
 app.use(express.static(__dirname)); // Servir archivos estáticos desde la carpeta 'public'
 app.use(cors());
 app.use(express.json());
@@ -140,11 +148,6 @@ function initListeners() {
         });
     });
 }
-const path = require('path');
-
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'index.html'));
-});
 
 const PORT = 3000;
 app.listen(PORT, () => {
